@@ -103,34 +103,22 @@ App = {
     });
   },
 
-  insert: function() {
-  
-    App.contracts.Election.deployed().then(function(instance) {
-
-
-      
-
-      var candidateNom = $('#condidateName').val();
-      alert(candidateNom);
-        instance.candidates(1).then(function(candidate) {
-
-          var name = candidate[1];
-          alert(name);
+  addCandidate: function() {
+    // Do not allow all accounts to add new candidate except account 1 and 2
+        var candidateName = $('#condidateName').val();
+        App.contracts.Election.deployed().then(function(instance)
+            {
+                return instance.addCandidate(candidateName, { from: App.account });
+            }
+        ).then(function(result) {
+            // Wait for candidates to update
+            $("#content").hide();
+            $("#loader").show();
+        }).catch(function(err) {
+            console.error(err);
         });
-        s
-      
-     return instance.candidateCount;
-      
-      }).then(function(result) {    
-        $("#content").hide();
-        $("#loader").show();
-      }).catch(function(err) {
-        console.error(err);
-      });
-    
-  },
-
-
+},
+  
 castVote: function() {
     var candidateId = $('#candidatesSelect').val();
     App.contracts.Election.deployed().then(function(instance) {
