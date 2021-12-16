@@ -104,7 +104,6 @@ App = {
   },
 
   addCandidate: function() {
-    // Do not allow all accounts to add new candidate except account 1 and 2
         var candidateName = $('#condidateName').val();
         App.contracts.Election.deployed().then(function(instance)
             {
